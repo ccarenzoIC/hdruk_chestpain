@@ -1,0 +1,9 @@
+
+site_name: HDRUK Chest Pain 
+theme: readthedocs
+plugins:
+- search
+- mkdocstrings
+nav:
+- Home: index.md
+- Validate: validate.md
