@@ -6,4 +6,3 @@ plugins:
 - mkdocstrings
 nav:
 - Home: index.md
-- Validate: validate.md
