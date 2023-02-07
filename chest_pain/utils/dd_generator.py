@@ -4,6 +4,8 @@ from urllib.request import urlopen
 from flatten_json import flatten 
 from black import format_file_contents, FileMode
 import sys
+from requests import get
+from bs4 import BeautifulSoup
 
 def generate_dd_pheno(mappings_icd10_snomed_path):
 
@@ -89,7 +91,7 @@ def generate_dd_pheno(mappings_icd10_snomed_path):
         dd_py += line        
 
     dd_py = format_file_contents(dd_py, fast=True, mode=FileMode())
-    with open("./modules/chest_pain/data/dd.py", "wt") as f:
+    with open("./chest_pain/data/dd.py", "wt") as f:
         f.write(dd_py)
 
     print("Successfully created black formatted dd.py")
@@ -144,7 +146,7 @@ def generate_dd_opcs(mappings_snomed_opcs_path):
         dd_opcs += line        
 
     dd_opcs = format_file_contents(dd_opcs, fast=True, mode=FileMode())
-    with open("./modules/chest_pain/data/dd_opcs.py", "wt") as f:
+    with open("./chest_pain/data/dd_opcs.py", "wt") as f:
         f.write(dd_opcs)
 
     print("Successfully created black formatted dd_opcs.py")
@@ -200,25 +202,66 @@ def generate_dd_icd10(mappings_icd10_snomed_path):
         dd_icd10 += line        
 
     dd_icd10 = format_file_contents(dd_icd10, fast=True, mode=FileMode())
-    with open("./modules/chest_pain/data/dd_icd10.py", "wt") as f:
+    with open("./chest_pain/data/dd_icd10.py", "wt") as f:
         f.write(dd_icd10)
 
     print("Successfully created black formatted dd_icd10.py")
 
     print(dd_icd10)
 
+
+    def generate_dd_bnf():
+  
+        bnf_dictionary = {
+                        "lipid_regulating_drugs":{"description":"BNF Chapter 2.12","url":"https://openprescribing.net/bnf/0212/"},
+                        "anti_platelet_drugs":{"description":"BNF chapter 2.9","url":"https://openprescribing.net/bnf/0209/"},
+                        "beta_adrenoceptor_blocking_drugs":{"description":"BNF Chapter 2.4","url":"https://openprescribing.net/bnf/0204/"},
+                        "renin_angiotensin_system_drugs":{"description":"BNF chapter 2.5.5","url":"https://openprescribing.net/bnf/020505/"}
+                        }
+
+
+        # Get SNOMED Codes and member codes
+        drugs_members = {}
+        for k, v in bnf_dictionary.items():
+            print("Getting list of drugs for ", k)
+            r = get(v["url"])
+            soup = BeautifulSoup(r.text, 'html.parser')
+            mainview = soup.find(class_="starter-template")
+            out = []
+            for child in mainview.children:
+                if child.name == 'a':
+                    drug = child.text
+                    drug = drug[0:drug.find("(")]
+                    out.append(drug)
+
+            print("Got", len(out), " drugs")
+            drugs_members[k] = {"description":v["description"],"drug_list":out}
+
+        # Convert dict object into a python module
+        text = ""
+        for k, v in drugs_members.items():
+            line = f"{k} = {v}\n\n"
+            # replace non-ascii characters
+            line = line.encode(encoding="ascii", errors="replace").decode().replace("?", "")
+            text += line
+        print(text)
+        text = format_file_contents(text, fast=True, mode=FileMode())
+
+        with open("./chest_pain/data/dd_bnf.py", "wt") as f:
+            f.write(text)
+
     if __name__ == "__main__":
         # generate_nhsdd()
         # generate_nhsdd_snomed()
         if sys.argv[1] == "pheno":
             print("Generating chest_pain/data/dd.py")
-            generate_dd_pheno("./datafiles/mappings_icd10.csv")
+            generate_dd_pheno("./data/interim/mappings_icd10.csv")
         elif sys.argv[1] == "icd10":
             print("Generating chest_pain/data/dd_icd10.py")
-            generate_dd_icd10("./datafiles/mappings_icd10.csv")
+            generate_dd_icd10("./data/interim/mappings_icd10.csv")
         elif sys.argv[1] == "opcs":
             print("Generating avoidable_admissions/data/dd_opcs.py")
-            generate_dd_opcs("./datafiles/mappings_opcs.csv")
+            generate_dd_opcs("./data/interim/mappings_opcs.csv")
         else:
             print(
                 "Generating chest_pain/data/dd.py, chest_pain/data/dd_icd10.py and chest_pain/data/dd_opcs.py"
