@@ -1,5 +1,5 @@
 hypertension = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH189/version/378/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH189/version/378/export/codes/?format=json",
     "mapping": [
         {
             "Hypertension (3)": [
@@ -321,7 +321,7 @@ hypertension = {
 }
 
 smoking = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH982/version/2160/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH982/version/2160/export/codes/?format=json",
     "mapping": [
         {
             "CCU002_01 Smoking status - Phenotypes - England primary care EHR: Ex smoker": [
@@ -383,7 +383,7 @@ smoking = {
 }
 
 diabetes = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH152/version/304/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH152/version/304/export/codes/?format=json",
     "mapping": [
         {
             "Diabetes not otherwise specified (6)": [
@@ -599,7 +599,7 @@ diabetes = {
 }
 
 myocardial_infarction = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH215/version/430/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH215/version/430/export/codes/?format=json",
     "mapping": [
         {
             "Complications of MI (7)": [
@@ -682,7 +682,7 @@ myocardial_infarction = {
 }
 
 heart_failure = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH182/version/364/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH182/version/364/export/codes/?format=json",
     "mapping": [
         {
             "Diagnosis of Heart failure": [
@@ -833,7 +833,7 @@ heart_failure = {
 }
 
 stroke = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH85/version/170/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH85/version/170/export/codes/?format=json",
     "mapping": [
         {
             "History of stroke, not specified as haemorrhage or infarction": [
@@ -905,7 +905,7 @@ stroke = {
 }
 
 ischaemic_stroke = {
-    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH56/version/112/export/codes/format=json",
+    "url": "http://phenotypes.healthdatagateway.org/api/v1/public/phenotypes/PH56/version/112/export/codes/?format=json",
     "mapping": [
         {
             "Diagnosis of Ischaemic stroke": [
